@@ -13,6 +13,7 @@ const Clinics = () => {
 
   useEffect(() => {
     fetchClinics();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filters]);
 
   const fetchClinics = async () => {

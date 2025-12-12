@@ -34,6 +34,7 @@ const Booking = () => {
     if (formData.doctor) {
       fetchDoctor();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [formData.clinic, formData.doctor]);
 
   const fetchClinic = async () => {

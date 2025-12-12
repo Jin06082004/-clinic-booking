@@ -11,6 +11,7 @@ const ClinicDetail = () => {
 
   useEffect(() => {
     fetchClinicData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const fetchClinicData = async () => {
