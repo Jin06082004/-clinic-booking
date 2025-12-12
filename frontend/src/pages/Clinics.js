@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { clinicService } from '../services/api';
+import { getSafeImageUrl } from '../utils/helpers';
 
 const Clinics = () => {
   const [clinics, setClinics] = useState([]);
@@ -65,7 +66,7 @@ const Clinics = () => {
       <div className="clinics-grid">
         {clinics.map((clinic) => (
           <div key={clinic._id} className="clinic-card">
-            <img src={clinic.image} alt={clinic.name} />
+            <img src={getSafeImageUrl(clinic.image)} alt={clinic.name} />
             <div className="clinic-info">
               <h3>{clinic.name}</h3>
               <p className="clinic-city">{clinic.city}</p>

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { bookingService, clinicService, doctorService } from '../services/api';
+import { formatDateForInput } from '../utils/helpers';
 
 const Booking = () => {
   const [searchParams] = useSearchParams();
@@ -107,7 +108,7 @@ const Booking = () => {
               value={formData.date}
               onChange={handleChange}
               required
-              min={new Date().toISOString().split('T')[0]}
+              min={formatDateForInput()}
             />
           </div>
 

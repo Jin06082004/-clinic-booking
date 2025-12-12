@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { clinicService, doctorService } from '../services/api';
+import { getSafeImageUrl } from '../utils/helpers';
 
 const ClinicDetail = () => {
   const { id } = useParams();
@@ -37,7 +38,7 @@ const ClinicDetail = () => {
   return (
     <div className="clinic-detail">
       <div className="clinic-header">
-        <img src={clinic.image} alt={clinic.name} className="clinic-image" />
+        <img src={getSafeImageUrl(clinic.image)} alt={clinic.name} className="clinic-image" />
         <div className="clinic-header-info">
           <h1>{clinic.name}</h1>
           <p className="clinic-address">
@@ -72,7 +73,7 @@ const ClinicDetail = () => {
           <div className="doctors-grid">
             {doctors.map((doctor) => (
               <div key={doctor._id} className="doctor-card">
-                <img src={doctor.image} alt={doctor.name} />
+                <img src={getSafeImageUrl(doctor.image)} alt={doctor.name} />
                 <div className="doctor-info">
                   <h3>{doctor.name}</h3>
                   <p className="doctor-specialty">{doctor.specialty}</p>
