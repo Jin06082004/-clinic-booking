@@ -1,0 +1,16 @@
+{
+  "name": "clinic-booking",
+  "version": "1.0.0",
+  "description": "Full-stack clinic booking application",
+  "scripts": {
+    "install-all": "npm install --prefix backend && npm install --prefix frontend",
+    "backend": "npm start --prefix backend",
+    "frontend": "npm start --prefix frontend",
+    "backend-dev": "npm run dev --prefix backend",
+    "seed": "npm run seed --prefix backend",
+    "build": "npm run build --prefix frontend"
+  },
+  "keywords": ["clinic", "booking", "healthcare", "react", "nodejs", "mongodb"],
+  "author": "",
+  "license": "ISC"
+}

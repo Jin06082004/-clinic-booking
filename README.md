@@ -84,6 +84,47 @@ clinic-booking/
 - Node.js (v14 or higher)
 - MongoDB (local or Atlas)
 
+### Quick Start
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd clinic-booking
+```
+
+2. Install all dependencies (both backend and frontend):
+```bash
+npm run install-all
+```
+
+3. Set up environment variables:
+```bash
+# Backend
+cp backend/.env.example backend/.env
+# Edit backend/.env with your MongoDB URI and JWT secret
+
+# Frontend (optional)
+cp frontend/.env.example frontend/.env
+```
+
+4. Seed the database with sample data:
+```bash
+npm run seed
+```
+
+5. Start the backend and frontend:
+```bash
+# In one terminal - start backend
+npm run backend
+
+# In another terminal - start frontend
+npm run frontend
+```
+
+The application will be available at http://localhost:3000
+
+### Detailed Setup
+
 ### Backend Setup
 
 1. Navigate to the backend directory:
@@ -116,6 +157,11 @@ npm start
 For development with auto-reload:
 ```bash
 npm run dev
+```
+
+6. (Optional) Seed the database with sample data:
+```bash
+npm run seed
 ```
 
 The backend will run on http://localhost:5000
@@ -183,11 +229,15 @@ The frontend will run on http://localhost:3000
 ## Usage
 
 1. Start MongoDB service
-2. Start the backend server
-3. Start the frontend development server
-4. Open http://localhost:3000 in your browser
-5. Register a new account or login
-6. Browse clinics and book appointments
+2. Seed the database (first time only): `npm run seed` from the root directory
+3. Start the backend server
+4. Start the frontend development server
+5. Open http://localhost:3000 in your browser
+6. Register a new account or login with sample credentials:
+   - User: `john@example.com` / `password123`
+   - User: `jane@example.com` / `password123`
+   - Admin: `admin@example.com` / `admin123`
+7. Browse clinics and book appointments
 
 ## Database Models
 
