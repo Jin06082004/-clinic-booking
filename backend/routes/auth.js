@@ -100,13 +100,16 @@ router.post('/login', authLimiter, async (req, res) => {
 // Get current user profile
 router.get('/profile', auth, async (req, res) => {
   try {
+    const user = await User.findById(req.user._id).populate('clinic', 'name');
+    
     res.json({
       user: {
-        id: req.user._id,
-        name: req.user.name,
-        email: req.user.email,
-        phone: req.user.phone,
-        role: req.user.role
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        role: user.role,
+        clinic: user.clinic
       }
     });
   } catch (error) {
@@ -139,6 +142,104 @@ router.put('/profile', auth, async (req, res) => {
         role: user.role
       }
     });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Admin Routes
+// Get all users (Admin only)
+router.get('/users', auth, async (req, res) => {
+  try {
+    // Check if user is admin
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied. Admin only.' });
+    }
+
+    const users = await User.find()
+      .populate('clinic', 'name')
+      .select('-password')
+      .sort({ createdAt: -1 });
+
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Get patients list (Receptionist and Admin)
+router.get('/patients', auth, async (req, res) => {
+  try {
+    // Check if user is receptionist or admin
+    if (!['receptionist', 'admin'].includes(req.user.role)) {
+      return res.status(403).json({ message: 'Access denied.' });
+    }
+
+    const patients = await User.find({ role: 'user' })
+      .select('-password')
+      .sort({ createdAt: -1 });
+
+    res.json(patients);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Update user role (Admin only)
+router.put('/users/:id/role', auth, async (req, res) => {
+  try {
+    // Check if user is admin
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied. Admin only.' });
+    }
+
+    const { role } = req.body;
+    
+    if (!['user', 'receptionist', 'admin'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role' });
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    user.role = role;
+    await user.save();
+
+    res.json({
+      message: 'User role updated successfully',
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+
+// Delete user (Admin only)
+router.delete('/users/:id', auth, async (req, res) => {
+  try {
+    // Check if user is admin
+    if (req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Access denied. Admin only.' });
+    }
+
+    // Prevent deleting yourself
+    if (req.params.id === req.user._id.toString()) {
+      return res.status(400).json({ message: 'Cannot delete your own account' });
+    }
+
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({ message: 'User deleted successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Server error', error: error.message });
   }

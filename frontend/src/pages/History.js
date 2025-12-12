@@ -24,7 +24,7 @@ const History = () => {
       const response = await bookingService.getAll();
       setBookings(response.data);
     } catch (err) {
-      setError('Failed to load bookings');
+      setError('Thất bại khi load bookings');
     } finally {
       setLoading(false);
     }
@@ -36,7 +36,7 @@ const History = () => {
         await bookingService.cancel(id);
         fetchBookings();
       } catch (err) {
-        alert('Failed to cancel booking');
+        alert('Thất bại khi cancel booking');
       }
     }
   };
@@ -61,7 +61,7 @@ const History = () => {
   return (
     <div className="history-page">
       <div className="history-container">
-        <h1>My Bookings</h1>
+        <h1>Lịch Hẹn Của Tôi</h1>
 
         {error && <div className="error-message">{error}</div>}
 
@@ -85,13 +85,13 @@ const History = () => {
                 <div className="booking-details">
                   <p><strong>Doctor:</strong> {booking.doctor?.name}</p>
                   <p><strong>Specialty:</strong> {booking.doctor?.specialty}</p>
-                  <p><strong>Date:</strong> {new Date(booking.date).toLocaleDateString()}</p>
-                  <p><strong>Time:</strong> {booking.time}</p>
+                  <p><strong>Ngày:</strong> {new Date(booking.date).toLocaleDateString()}</p>
+                  <p><strong>Giờ:</strong> {booking.time}</p>
                   {booking.symptoms && (
                     <p><strong>Symptoms:</strong> {booking.symptoms}</p>
                   )}
                   {booking.notes && (
-                    <p><strong>Notes:</strong> {booking.notes}</p>
+                    <p><strong>Ghi Chú:</strong> {booking.notes}</p>
                   )}
                 </div>
                 {booking.status === 'pending' && (

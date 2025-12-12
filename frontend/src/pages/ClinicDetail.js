@@ -25,13 +25,13 @@ const ClinicDetail = () => {
       setClinic(clinicRes.data);
       setDoctors(doctorsRes.data);
     } catch (err) {
-      setError('Failed to load clinic details');
+      setError('Thất bại khi load clinic details');
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) return <div className="loading">Loading...</div>;
+  if (loading) return <div className="loading">Đang tải...</div>;
   if (error) return <div className="error-message">{error}</div>;
   if (!clinic) return <div className="error-message">Clinic not found</div>;
 
@@ -48,7 +48,7 @@ const ClinicDetail = () => {
             Phone: {clinic.phone} | Email: {clinic.email}
           </p>
           <div className="clinic-rating">
-            Rating: {clinic.rating.toFixed(1)} ⭐
+            Đánh Giá: {clinic.rating.toFixed(1)} ⭐
           </div>
           <div className="clinic-specialties">
             {clinic.specialties.map((specialty, index) => (
@@ -61,7 +61,7 @@ const ClinicDetail = () => {
       </div>
 
       <div className="clinic-description">
-        <h2>About</h2>
+        <h2>Giới Thiệu</h2>
         <p>{clinic.description}</p>
       </div>
 
@@ -78,15 +78,15 @@ const ClinicDetail = () => {
                   <h3>{doctor.name}</h3>
                   <p className="doctor-specialty">{doctor.specialty}</p>
                   <p className="doctor-qualification">{doctor.qualification}</p>
-                  <p className="doctor-experience">{doctor.experience} years experience</p>
+                  <p className="doctor-experience">{doctor.experience} năm experience</p>
                   <div className="doctor-rating">
-                    Rating: {doctor.rating.toFixed(1)} ⭐
+                    Đánh Giá: {doctor.rating.toFixed(1)} ⭐
                   </div>
                   <Link
                     to={`/booking?clinic=${clinic._id}&doctor=${doctor._id}`}
                     className="btn btn-primary"
                   >
-                    Book Appointment
+                    Đặt Lịch Khám
                   </Link>
                 </div>
               </div>

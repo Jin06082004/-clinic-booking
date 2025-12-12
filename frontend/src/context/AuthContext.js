@@ -57,6 +57,18 @@ export const AuthProvider = ({ children }) => {
     return response.data;
   };
 
+  // Get redirect path based on user role
+  const getRedirectPath = (userRole) => {
+    switch (userRole) {
+      case 'admin':
+        return '/admin/dashboard';
+      case 'receptionist':
+        return '/receptionist/dashboard';
+      default:
+        return '/clinics';
+    }
+  };
+
   const value = {
     user,
     loading,
@@ -65,6 +77,7 @@ export const AuthProvider = ({ children }) => {
     logout,
     updateUser,
     isAuthenticated: !!user,
+    getRedirectPath,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -39,27 +39,24 @@ const Profile = () => {
 
     try {
       await updateUser(formData);
-      setSuccess('Profile updated successfully!');
+      setSuccess('Hồ Sơ updated successfully!');
     } catch (err) {
-      setError(err.response?.data?.message || 'Failed to update profile');
+      setError(err.response?.data?.message || 'Thất bại khi update profile');
     } finally {
       setLoading(false);
     }
   };
 
-  if (!user) return <div className="loading">Loading...</div>;
+  if (!user) return <div className="loading">Đang tải...</div>;
 
   return (
     <div className="profile-page">
       <div className="profile-container">
-        <h1>My Profile</h1>
+        <h1>Hồ Sơ</h1>
 
         <div className="profile-info">
           <div className="info-item">
             <strong>Email:</strong> {user.email}
-          </div>
-          <div className="info-item">
-            <strong>Role:</strong> {user.role}
           </div>
         </div>
 
@@ -92,7 +89,7 @@ const Profile = () => {
           </div>
 
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Updating...' : 'Update Profile'}
+            {loading ? 'Updating...' : 'Update Hồ Sơ'}
           </button>
         </form>
       </div>

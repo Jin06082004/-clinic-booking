@@ -23,7 +23,7 @@ const Clinics = () => {
       const response = await clinicService.getAll(filters);
       setClinics(response.data);
     } catch (err) {
-      setError('Failed to load clinics');
+      setError('Thất bại khi load clinics');
     } finally {
       setLoading(false);
     }
@@ -79,10 +79,10 @@ const Clinics = () => {
                 ))}
               </div>
               <div className="clinic-rating">
-                Rating: {clinic.rating.toFixed(1)} ⭐
+                Đánh Giá: {clinic.rating.toFixed(1)} ⭐
               </div>
               <Link to={`/clinics/${clinic._id}`} className="btn btn-primary">
-                View Details
+                Xem Chi Tiết
               </Link>
             </div>
           </div>

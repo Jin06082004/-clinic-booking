@@ -9,7 +9,7 @@ const Login = () => {
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, getRedirectPath } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -25,10 +25,12 @@ const Login = () => {
     setLoading(true);
 
     try {
-      await login(formData);
-      navigate('/clinics');
+      const data = await login(formData);
+      // Redirect based on user role
+      const redirectPath = getRedirectPath(data.user.role);
+      navigate(redirectPath);
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.');
+      setError(err.response?.data?.message || 'Đăng nhập thất bại. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
@@ -37,7 +39,7 @@ const Login = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Login</h2>
+        <h2>Đăng Nhập</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -48,26 +50,26 @@ const Login = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="Enter your email"
+              placeholder="Nhập email của bạn"
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label>Mật Khẩu</label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               required
-              placeholder="Enter your password"
+              placeholder="Nhập mật khẩu"
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Đang đăng nhập...' : 'Đăng Nhập'}
           </button>
         </form>
         <p className="auth-link">
-          Don't have an account? <Link to="/register">Register here</Link>
+          Chưa có tài khoản? <Link to="/register">Đăng ký tại đây</Link>
         </p>
       </div>
     </div>

@@ -8,8 +8,16 @@ router.get('/', auth, async (req, res) => {
   try {
     let query = {};
     
+    // Admin can see all bookings
+    if (req.user.role === 'admin') {
+      // No filter
+    }
+    // Receptionist can see bookings for their clinic
+    else if (req.user.role === 'receptionist') {
+      query.clinic = req.user.clinic;
+    }
     // Regular users can only see their own bookings
-    if (req.user.role !== 'admin') {
+    else {
       query.user = req.user._id;
     }
 
@@ -38,7 +46,15 @@ router.get('/:id', auth, async (req, res) => {
     }
 
     // Users can only view their own bookings
-    if (req.user.role !== 'admin' && booking.user._id.toString() !== req.user._id.toString()) {
+    // Receptionist can view bookings from their clinic
+    // Admin can view all bookings
+    if (req.user.role === 'admin') {
+      // Admin can view all
+    } else if (req.user.role === 'receptionist') {
+      if (booking.clinic._id.toString() !== req.user.clinic.toString()) {
+        return res.status(403).json({ message: 'Access denied' });
+      }
+    } else if (booking.user._id.toString() !== req.user._id.toString()) {
       return res.status(403).json({ message: 'Access denied' });
     }
 

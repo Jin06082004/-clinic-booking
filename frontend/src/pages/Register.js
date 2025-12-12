@@ -30,7 +30,7 @@ const Register = () => {
       await register(formData);
       navigate('/clinics');
     } catch (err) {
-      setError(err.response?.data?.message || 'Registration failed. Please try again.');
+      setError(err.response?.data?.message || 'Đăng ký thất bại. Vui lòng thử lại.');
     } finally {
       setLoading(false);
     }
@@ -39,18 +39,18 @@ const Register = () => {
   return (
     <div className="auth-container">
       <div className="auth-card">
-        <h2>Register</h2>
+        <h2>Đăng Ký</h2>
         {error && <div className="error-message">{error}</div>}
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Name</label>
+            <label>Họ và Tên</label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
               required
-              placeholder="Enter your name"
+              placeholder="Nhập họ và tên"
             />
           </div>
           <div className="form-group">
@@ -61,22 +61,22 @@ const Register = () => {
               value={formData.email}
               onChange={handleChange}
               required
-              placeholder="Enter your email"
+              placeholder="Nhập email của bạn"
             />
           </div>
           <div className="form-group">
-            <label>Phone</label>
+            <label>Số Điện Thoại</label>
             <input
               type="tel"
               name="phone"
               value={formData.phone}
               onChange={handleChange}
               required
-              placeholder="Enter your phone number"
+              placeholder="Nhập số điện thoại"
             />
           </div>
           <div className="form-group">
-            <label>Password</label>
+            <label>Mật Khẩu</label>
             <input
               type="password"
               name="password"
@@ -84,15 +84,15 @@ const Register = () => {
               onChange={handleChange}
               required
               minLength="6"
-              placeholder="Enter your password (min 6 characters)"
+              placeholder="Nhập mật khẩu (tối thiểu 6 ký tự)"
             />
           </div>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? 'Registering...' : 'Register'}
+            {loading ? 'Đang đăng ký...' : 'Đăng Ký'}
           </button>
         </form>
         <p className="auth-link">
-          Already have an account? <Link to="/login">Login here</Link>
+          Đã có tài khoản? <Link to="/login">Đăng nhập tại đây</Link>
         </p>
       </div>
     </div>

@@ -25,8 +25,16 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin'],
+    enum: ['user', 'receptionist', 'admin'],
     default: 'user'
+  },
+  clinic: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Clinic',
+    // Required only for receptionist role
+    required: function() {
+      return this.role === 'receptionist';
+    }
   },
   createdAt: {
     type: Date,

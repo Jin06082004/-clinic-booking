@@ -3,6 +3,7 @@ node_modules/
 package-lock.json
 yarn.lock
 
+.gitignore
 # Environment variables
 .env
 .env.local
@@ -28,3 +29,5 @@ Thumbs.db
 
 # Testing
 coverage/
+seed.js
+
